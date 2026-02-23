@@ -1,344 +1,214 @@
-#!/usr/bin/python
-# << CODE BY HUNX04
-# << MAU RECODE ??? IZIN DULU LAH , MINIMAL TAG AKUN GITHUB MIMIN YANG MENGARAH KE AKUN INI, LEBIH ENAKNYA SIH FORK 
-# << KALAU DI ATAS TIDAK DI IKUTI MAKA AKAN MENDAPATKAN DOSA KARENA MIMIN GAK IKHLAS DUNIA AKHIRAT SAMPAI 7 TURUNAN
-# “Wahai orang-orang yang beriman! Janganlah kamu saling memakan harta sesamamu dengan jalan yang batil,” (QS. An Nisaa': 29). Rasulullah SAW juga melarang umatnya untuk mengambil hak orang lain tanpa izin.
+#!/usr/bin/env python3
 
 import sys
 import os
 import random
 import time
-from sys import stderr
+import subprocess
+import platform
 
 
-Bl='\033[30m' # VARIABLE COLOR 
-Re='\033[1;31m'
-Gr='\033[1;32m'
-Ye='\033[1;33m'
-Blu='\033[1;34m'
-Mage='\033[1;35m'
-Cy='\033[1;36m'
-Wh='\033[1;37m'
+def clear_screen():
+    os.system('cls' if os.name == 'nt' else 'clear')
 
-os.system('clear')
 
-def autoketik(x): # AUTOKETIK CUY!!
-    for y in x + "\n":
-        sys.stdout.write(y)
-        sys.stdout.flush()
-        time.sleep(0.030)
+def check_internet():
+    try:
+        param = '-n' if platform.system().lower() == 'windows' else '-c'
+        subprocess.check_call(['ping', param, '1', 'www.google.com'], 
+                            stdout=subprocess.DEVNULL, stderr=subprocess.DEVNULL)
+        return True
+    except subprocess.CalledProcessError:
+        return False
 
-while True: #wHILE TRUE
-    print(f"\n{Wh}[{Gr}+{Wh}] {Ye}LOGIN YOUR GAME")
-    name = input(f"\n{Gr}Input Full Name {Wh}:{Ye} ")
-    status = int(input(f"{Gr}Age {Wh}            :{Ye} "))
-    if status >= 100:
-        print("LU DH TUA")
-        sys.exit()
-    os.system('clear')
-    break
 
-print()
-def animasi():    
-            for i in range(25):
-                sys.stdout.write(f'\r{Wh}LOADING YOUR GAME{Gr}  🙂')
-                time.sleep(0.3)
-                sys.stdout.write(f'\r{Wh}LOADING YOUR GAME{Gr}  😜')
-                time.sleep(0.3)
-                sys.stdout.write(f'\r{Wh}LOADING YOUR GAME{Gr}  🙂')
-                time.sleep(0.3)
-            sys.stdout.write(f'\r{Wh}LOADING YOUR GAME{Gr}  😜')
-            time.sleep(0.3)
-            os.system('clear')
-animasi()
+COLORS = {
+    'Bl': '\033[30m',
+    'Re': '\033[1;31m',
+    'Gr': '\033[1;32m',
+    'Ye': '\033[1;33m',
+    'Blu': '\033[1;34m',
+    'Mage': '\033[1;35m',
+    'Cy': '\033[1;36m',
+    'Wh': '\033[1;37m',
+    'reset': '\033[0m'
+}
+
+
+def c(text, color):
+    return f"{COLORS.get(color, '')}{text}{COLORS['reset']}"
+
+
+def loading_animation(message, duration=0.2, cycles=10):
+    faces = ['🙂', '😎', '🙂']
+    for i in range(cycles):
+        sys.stdout.write(f'\r{c(message, "Wh")} {c(faces[i % len(faces)], "Gr")}')
+        time.sleep(duration)
+    clear_screen()
+
 
 def banner():
-    stderr.writelines(f"""{Ye}
+    banner_text = """\
     __________                     .__                    __      __                .___
-    \______   \__ _________________|  |   ____           /  \    /  \___________  __| _/
-    |     ___/  |  \___   /\___   /  | _/ __ \   ______ \   \/\/   /  _ \_  __ \/ __ | 
-    |    |   |  |  //    /  /    /|  |_\  ___/  /_____/  \        (  <_> )  | \/ /_/ | 
-    |____|   |____//_____ \/_____ \____/\___  >           \__/\  / \____/|__|  \____ | 
-                        \/      \/         \/                 \/                   \/ 
-    <<  {Wh}WORD  PUZZLE  GAME   {Ye}<<{Wh}============================{Ye}>>    {Wh}AUTHOR  BY  HUNBYTS >>
+    \\______   \\__ _________________|  |   ____           /  \\    /  \\___________  __| _/
+    |     ___/  |  \\___   /\\___   /  | _/ __ \\   ______ \\   \\/\\/   /  _ \\_  __ \\/ __ | 
+    |    |   |  |  //    /  /    /|  |_\\  ___/  /_____/  \\        (  <_> )  | \\/ /_/ | 
+    |____|   |____//_____ \\/_____ \\____/\\___  >           \\__/\\  / \\____/|__|  \\____ | 
+                        \\/      \\/         \\/                 \\/                   \\/ 
+    <<  WORD  PUZZLE  GAME   <<============================>>    AUTHOR  BY  HUNBYTS >>
 
-                  {Gr} ----------------------------------------------- 
-                    {Wh}|             {Ye}.:: {Wh}MENU GAME {Ye}::.             {Wh}| 
-                    {Wh}|                                           {Wh}|
-                    {Wh}|   {Ye}[{Gr}1{Ye}] {Wh}NOOB                                {Wh}|
-                    {Wh}|   {Ye}[{Gr}2{Ye}] {Wh}MEDIUM                              {Wh}|
-                    {Wh}|   {Ye}[{Gr}3{Ye}] {Wh}HIGH                 {Gr}[{Ye}COMING SOON{Gr}]  {Wh}|
-                    {Wh}|   {Ye}[{Gr}4{Ye}] {Wh}LEGEND               {Gr}[{Ye}COMING SOON{Gr}]  {Wh}|
-                    {Wh}|   {Ye}[{Gr}5{Ye}] {Wh}GLORY                {Gr}[{Ye}COMING SOON{Gr}]  {Wh}|
-                    {Wh}|                                           {Wh}|
-                   {Gr}----------------------------------------------- 
-""")
-banner()
+                  -----------------------------------------------
+                    |             .:: MENU GAME ::.             |
+                    |                                           |
+                    |   [1] NOOB                                |
+                    |   [2] MEDIUM                              |
+                    |   [3] HIGH                 [COMING SOON] |
+                    |   [4] LEGEND               [COMING SOON] |
+                    |   [5] GLORY                [COMING SOON] |
+                    |                                           |
+                   -----------------------------------------------\
+"""
+    for line in banner_text.split('\n'):
+        print(c(line, 'Ye'))
 
-def Manusia(name):
-    user = input(f"\n   {Wh}[{Gr}+{Wh}] {Gr}Chose option game {Wh}:{Ye} ")
-    Score = 0
 
-    SOALNOOB = [
-        {
-            "soal":"A - C - R",
-            "jawaban":"CAR"
-        },
-        { 
-            "soal":"D - L - R - O - W",
-            "jawaban":"WORLD"
-        },
-        { 
-            "soal":"O - L - E - V",
-            "jawaban":"LOVE"
-        },
-        { 
-            "soal":"X - I - U - N - L",
-            "jawaban":"LINUX"
-        },
-        { 
-            "soal":"M - H - T - L",
-            "jawaban":"HTML"
-        },
-        { 
-            "soal":"C - S - S",
-            "jawaban":"CSS"
-        },
-        { 
-            "soal":"D - R - E",
-            "jawaban":"RED"
-        },
-        { 
-            "soal":"S - B - H - A",
-            "jawaban":"BASH"
-        },
-        { 
-            "soal":"Y - B - E - T",
-            "jawaban":"BYTE"
-        },
-        { 
-            "soal":"E - L - B - U",
-            "jawaban":"BLUE"
-        },
-        { 
-            "soal":"L - I - S - T",
-            "jawaban":"LIST"
-        },
-        {
-            "soal":"T - C - A",
-            "jawaban":"CAT"
-        },
-        {
-            "soal":"T - U - E - R",
-            "jawaban":"TRUE"
-        },
-        {
-            "soal":"L - F - E - S - A",
-            "jawaban":"FALSE"
-        },
-        {
-            "soal":"O - O - M - N",
-            "jawaban":"MOON"
-        },
-        {
-            "soal":"T - S - R - A - H ",
-            "jawaban":"TRASH"
-        },
-        {
-            "soal":"G - O - O - D",
-            "jawaban":"GOOD"
-        },
-        {
-            "soal":"Y - D - A",
-            "jawaban":"DAY"
-        },
-        {
-            "soal":"E - L - P - A - P",
-            "jawaban":"APPLE"
-        },
-        {
-            "soal":"T - M - I - S - E",
-            "jawaban":"TIMES"
-        }
+def get_questions(level):
+    soal_noob = [
+        {"soal": "A - C - R", "jawaban": "CAR"},
+        {"soal": "D - L - R - O - W", "jawaban": "WORLD"},
+        {"soal": "O - L - E - V", "jawaban": "LOVE"},
+        {"soal": "X - I - U - N - L", "jawaban": "LINUX"},
+        {"soal": "M - H - T - L", "jawaban": "HTML"},
+        {"soal": "C - S - S", "jawaban": "CSS"},
+        {"soal": "D - R - E", "jawaban": "RED"},
+        {"soal": "S - B - H - A", "jawaban": "BASH"},
+        {"soal": "Y - B - E - T", "jawaban": "BYTE"},
+        {"soal": "E - L - B - U", "jawaban": "BLUE"},
+        {"soal": "L - I - S - T", "jawaban": "LIST"},
+        {"soal": "T - C - A", "jawaban": "CAT"},
+        {"soal": "T - U - E - R", "jawaban": "TRUE"},
+        {"soal": "L - F - E - S - A", "jawaban": "FALSE"},
+        {"soal": "O - O - M - N", "jawaban": "MOON"},
+        {"soal": "T - S - R - A - H", "jawaban": "TRASH"},
+        {"soal": "G - O - O - D", "jawaban": "GOOD"},
+        {"soal": "Y - D - A", "jawaban": "DAY"},
+        {"soal": "E - L - P - A - P", "jawaban": "APPLE"},
+        {"soal": "T - M - I - S - E", "jawaban": "TIMES"}
     ]
 
-    SOALMEDIUM = [
-        {
-            "soalM":"T - N - O - U - M - N - I ",
-            "jawaban":"MOUNTIN"
-        },
-        { 
-            "soalM":"N - D - C - A - E - B - R - A - L - A  ",
-            "jawaban":"CANDELBARA"
-        },
-        { 
-            "soalM":"S - T - U - R - A - U",
-            "jawaban":"TAURUS"
-        },
-        { 
-            "soalM":"W - O - L - O - L - F",
-            "jawaban":"FOLLOW"
-        },
-        { 
-            "soalM":"T - Q - B - U - O - E - U",
-            "jawaban":"BOUQUET"
-        },
-        { 
-            "soalM":"F - A - C - T - I - R - F - R",
-            "jawaban":"AIRCRAFT"
-        },
-        { 
-            "soalM":"E - A - K - L",
-            "jawaban":"LAKE"
-        },
-        { 
-            "soalM":"E - M - A - I - N",
-            "jawaban":"ANIME"
-        },
-        { 
-            "soalM":"M - G - I - I - N - E",
-            "jawaban":"GEMINI"
-        },
-        { 
-            "soalM":"Z - N - E - R - E - B - U - L - I",
-            "jawaban":"NEBULIZER"
-        },
-        { 
-            "soalM":"D - L -  N - O - I - M - A - N",
-            "jawaban":"MANDOLIN"
-        },
-        {
-            "soalM":"O - M - O - N - K - I",
-            "jawaban":"KIMONO"
-        },
-        {
-            "soalM":"H - T - E - L - P - E - N - A",
-            "jawaban":"ELEPHANT"
-        },
-        {
-            "soalM":"R - I - D - A - O - N - D",
-            "jawaban":"ANDROID"
-        },
-        {
-            "soalM":"S - D - O - W - I - N - W",
-            "jawaban":"WINDOWS"
-        },
-        {
-            "soalM":"K - W - T - E - N - O - R",
-            "jawaban":"NETWORK"
-        },
-        {
-            "soalM":"G - A - L - A - U - E - N - G ",
-            "jawaban":"LANGUAGE"
-        },
-        {
-            "soalM":"G - P - A - R - A - O - N",
-            "jawaban":"PARAGON"
-        },
-        {
-            "soalM":"T - P - U - R - O - M - C - E",
-            "jawaban": "COMPUTER"
-        },
-        {
-            "soalM":"N - O - M - H - P - M - N - E - E - O - N ",
-            "jawaban":"PHENOMENON"
-        }
+    soal_medium = [
+        {"soal": "T - N - O - U - M - N - I", "jawaban": "MOUNTAIN"},
+        {"soal": "N - D - C - A - E - B - R - A - L - A", "jawaban": "CANDELABRA"},
+        {"soal": "S - T - U - R - A - U", "jawaban": "TAURUS"},
+        {"soal": "W - O - L - O - L - F", "jawaban": "FOLLOW"},
+        {"soal": "T - Q - B - U - O - E - U", "jawaban": "BOUQUET"},
+        {"soal": "F - A - C - T - I - R - F - R", "jawaban": "AIRCRAFT"},
+        {"soal": "E - A - K - L", "jawaban": "LAKE"},
+        {"soal": "E - M - A - I - N", "jawaban": "ANIME"},
+        {"soal": "M - G - I - I - N - E", "jawaban": "GEMINI"},
+        {"soal": "Z - N - E - R - E - B - U - L - I", "jawaban": "NEBULIZER"},
+        {"soal": "D - L - N - O - I - M - A - N", "jawaban": "MANDOLIN"},
+        {"soal": "O - M - O - N - K - I", "jawaban": "KIMONO"},
+        {"soal": "H - T - E - L - P - E - N - A", "jawaban": "ELEPHANT"},
+        {"soal": "R - I - D - A - O - N - D", "jawaban": "ANDROID"},
+        {"soal": "S - D - O - W - I - N - W", "jawaban": "WINDOWS"},
+        {"soal": "K - W - T - E - N - O - R", "jawaban": "NETWORK"},
+        {"soal": "G - A - L - A - U - E - N - G", "jawaban": "LANGUAGE"},
+        {"soal": "G - P - A - R - A - O - N", "jawaban": "PARAGON"},
+        {"soal": "T - P - U - R - O - M - C - E", "jawaban": "COMPUTER"},
+        {"soal": "N - O - M - H - P - M - N - E - E - O - N", "jawaban": "PHENOMENON"}
     ]
 
-    random.shuffle(SOALNOOB)
-    if user == '1':
-        os.system('clear')
-        print()
-        def animasi():    
-            for i in range(10):
-                sys.stdout.write(f'\r{Wh}LOADING YOUR LEVEL{Gr}  🙂')
-                time.sleep(0.2)
-                sys.stdout.write(f'\r{Wh}LOADING YOUR LEVEL{Gr}  😎')
-                time.sleep(0.2)
-                sys.stdout.write(f'\r{Wh}LOADING YOUR LEVEL{Gr}  🙂')
-                time.sleep(0.2)
-            sys.stdout.write(f'\r{Wh}LOADING YOUR LEVEL{Gr}  😎 ')
-            time.sleep(0.2)
-            os.system('clear')
-        animasi()
+    return soal_noob if level == '1' else soal_medium
 
-        for i,soal in enumerate(SOALNOOB):
-            print(f"""
-    {Wh}LEVEL {Ye}{i+1} {Wh}| {Gr}NOOB
-            
-        {Ye}{"QUESTION"}:             
-        {Gr}{soal["soal"]}           
-            
-    """)
-            asw = input(f"{Wh}[{Gr}+{Wh}] {Ye}{name} {Wh}- {Gr}Answer {Wh}: {Ye}")
-            if asw.upper() == soal["jawaban"]:
-                print(f"{Wh}Good Job!")
-                time.sleep(1)
-                os.system('clear')
-                Score += (5)
-            else:
-                print(f"{Re}Defeet!")
-                time.sleep(1)
-                os.system('clear')
-        print(f"{Ye}{name}{Wh}, Your score: {Score}/10\n")
 
-        pilih = input(f"\n{Wh}[{Gr}+{Wh}] {Gr}NEXT GAME {Ye}Y{Wh}/{Ye}N {Wh}:{Ye} ")
-        if  pilih == 'Y'  or  pilih == 'y':
-            banner()
-            Manusia(name)
-        elif pilih == 'N'  or  pilih == 'n':
-            print(f"\n{Wh}[{Gr}+{Wh}] {Ye}CLOSE GAME...")
-            time.sleep(1)
-            sys.exit()
-        else:
-            print(f"\n{Wh}[{Gr}+{Wh}] {Ye}YOUR OPTION NOT FOUND")
+def play_game(name, level):
+    questions = get_questions(level)
+    random.shuffle(questions)
+    
+    level_name = "NOOB" if level == '1' else "MEDIUM"
+    score = 0
+    
+    loading_animation("LOADING YOUR LEVEL")
+    
+    for i, q in enumerate(questions):
+        print(f"""
+    {c('LEVEL', 'Wh')} {c(str(i+1), 'Ye')} {c('|', 'Wh')} {c(level_name, 'Gr')}
         
-        random.shuffle(SOALMEDIUM)
-    elif  user == '2' :
-        os.system('clear')
-        print()
-        def animasi():    
-            for i in range(10):
-                sys.stdout.write(f'\r{Wh}LOADING YOUR LEVEL{Gr}  🙂')
-                time.sleep(0.2)
-                sys.stdout.write(f'\r{Wh}LOADING YOUR LEVEL{Gr}  😎')
-                time.sleep(0.2)
-                sys.stdout.write(f'\r{Wh}LOADING YOUR LEVEL{Gr}  🙂')
-                time.sleep(0.2)
-            sys.stdout.write(f'\r{Wh}LOADING YOUR LEVEL{Gr}  😎 ')
-            time.sleep(0.2)
-            os.system('clear')
-        animasi()
-
-        for x,soalM in enumerate(SOALMEDIUM):
-            print(f"""
-    {Wh}LEVEL {Ye}{x+1} {Wh}| {Gr}MEDIUM
-            
-        {Ye}{"QUESTION"}:             
-        {Gr}{soalM["soalM"]}           
+        {c('QUESTION:', 'Ye')}             
+        {c(q['soal'], 'Gr')}           
             
     """)
-            asw = input(f"{Wh}[{Gr}+{Wh}] {Ye}{name} {Wh}- {Gr}Answer {Wh}: {Ye}")
-            if asw.upper() == soalM["jawaban"]:
-                print(f"{Wh}Good Job!")
-                time.sleep(1)
-                os.system('clear')
-                Score += (5)
-            else:
-                print(f"{Re}Defeet!")
-                time.sleep(1)
-                os.system('clear')
-        print(f"{Ye}{name}{Wh}, Your score: {Score}/10\n")
-
-        pilih = input(f"\n{Wh}[{Gr}+{Wh}] {Gr}NEXT GAME {Ye}Y{Wh}/{Ye}N {Wh}:{Ye} ")
-        if  pilih == 'Y'  or  pilih == 'y':
+        answer = input(f"{c('[+]', 'Wh')} {c(name, 'Ye')} {c('-', 'Wh')} {c('Answer', 'Gr')} {c(':', 'Ye')} ")
+        
+        if answer.upper() == q['jawaban']:
+            print(c("Good Job!", "Wh"))
+            time.sleep(1)
+            clear_screen()
+            score += 5
+        else:
+            print(c("Defeat!", "Re"))
+            time.sleep(1)
+            clear_screen()
+    
+    print(f"{c(name, 'Ye')}{c(', Your score: ', 'Wh')}{c(f'{score}/{len(questions)}', 'Gr')}\n")
+    
+    while True:
+        play_again = input(f"{c('[+]', 'Wh')} {c('NEXT GAME', 'Gr')} {c('Y/N', 'Ye')} {c(':', 'Wh')} ").lower()
+        if play_again == 'y':
             banner()
-            Manusia(name)
-        elif pilih == 'N'  or  pilih == 'n':
-            print(f"\n{Wh}[{Gr}+{Wh}] {Ye}CLOSE GAME...")
+            main(name)
+            return
+        elif play_again == 'n':
+            print(f"\n{c('[+]', 'Wh')} {c('CLOSE GAME...', 'Ye')}")
             time.sleep(1)
             sys.exit()
         else:
-            print(f"\n{Wh}[{Gr}+{Wh}] {Ye}YOUR OPTION NOT FOUND")
-Manusia(name)
+            print(c("Option not found!", "Re"))
 
+
+def login():
+    clear_screen()
+    print(c(f"\n[+] LOGIN YOUR GAME", "Gr"))
+    name = input(c(f"\nInput Full Name :", "Gr"))
+    
+    while True:
+        try:
+            age = int(input(c(f"Age            :", "Gr")))
+            if age >= 100:
+                print(c("You're too old!", "Re"))
+                sys.exit()
+            break
+        except ValueError:
+            print(c("Please enter a valid number!", "Re"))
+    
+    clear_screen()
+    return name
+
+
+def main(name=None):
+    if name is None:
+        name = login()
+    
+    loading_animation("LOADING YOUR GAME")
+    banner()
+    
+    while True:
+        user_choice = input(c(f"\n   [+] Choose option game :", "Gr"))
+        
+        if user_choice in ['1', '2']:
+            play_game(name, user_choice)
+        elif user_choice in ['3', '4', '5']:
+            print(c("Coming soon!", "Ye"))
+        else:
+            print(c("Invalid option!", "Re"))
+
+
+if __name__ == "__main__":
+    if not check_internet():
+        print(c("No internet connection! Please check your network.", "Re"))
+        sys.exit()
+    
+    print(c("Internet connection OK!", "Gr"))
+    clear_screen()
+    main()
